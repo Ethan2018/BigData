@@ -236,4 +236,137 @@ public class CzfTools {
 		return count;
 	}
 	
+	/**
+	 * AES加密
+	 * @param str
+	 * @return
+	 */
+	public static String aesEncrypt(String str) {
+		byte[] byteArr = str.getBytes();
+		StringBuilder sb = new StringBuilder();
+		int tmp = 0123;
+		for (int i = 0; i < byteArr.length; i++) {
+			tmp ^= byteArr[i];
+			String hexStr = Integer.toHexString(tmp);
+			if (hexStr.length() < 2) {
+				sb.append("0").append(hexStr);
+			} else {
+				sb.append(hexStr);
+			}
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * AES解密
+	 * @param str
+	 * @return
+	 */
+	public static String aesDecipher(String str) {
+		byte[] decipher = new byte[str.length() / 2];
+		decipher[0] = (byte)(0123 ^ Integer.parseInt(str.substring(0 * 2, 0 * 2 + 2), 16));
+		for (int i = 0; i < decipher.length - 1; i++) {
+			decipher[i + 1] = (byte)(Integer.parseInt(str.substring(i * 2, i * 2 + 2), 16) ^ Integer.parseInt(str.substring((i + 1) * 2, (i + 1) * 2 + 2), 16));
+		}
+		String strDecipher = new String(decipher);
+		return strDecipher;
+	}
+	
+	/**
+	 * 字符串转16进制
+	 * @param str
+	 * @return
+	 */
+	public static String string2Hex(String str) {
+		char[] chars = "0123456789ABCDEF".toCharArray();
+		StringBuilder sb = new StringBuilder();
+		byte[] hexStr = str.getBytes();
+		for (int i = 0; i < hexStr.length; i++) {
+			int heigh = (hexStr[i] & 0xF0) >> 4;//高位值
+			sb.append(chars[heigh]);//高位值对应的代表符号
+			int low = (hexStr[i] & 0x0F);//低位值
+			sb.append(chars[low]);//低位值对应的代表符号
+		}
+		return sb.toString();
+	}
+	
+	public static String hex2Str(String str) {
+		int length = str.length() / 2;
+		char[] chars = str.toCharArray();
+		byte[] bytes = new byte[length];
+		for (int i = 0; i < length; i++) {
+		   int position = i * 2;
+		   bytes[i] = (byte) (charToByte(chars[position]) << 4 | charToByte(chars[position + 1]));
+		}
+		String strDecipher = new String(bytes);
+		return strDecipher;
+	}
+	
+	
+	private static int charToByte(char c) {
+		String radix16Symbol = "0123456789ABCDEF";
+		  return (byte) radix16Symbol.indexOf(c);
+	}
+
+	public static String str2Reverse(String str) {
+		char[] chars = "0123456789ABCDEF".toCharArray();
+		StringBuilder sb = new StringBuilder();
+		byte[] hexStr = str.getBytes();
+		for (int i = 0; i < hexStr.length; i++) {
+			int low = (hexStr[i] & 0x0F);//低位值
+			sb.append(chars[low]);//低位值对应的代表符号
+			int heigh = (hexStr[i] & 0xF0) >> 4;//高位值
+			sb.append(chars[heigh]);//高位值对应的代表符号
+		}
+		return sb.toString();
+	}
+	
+	public static String hex2ReverseStr(String str) {
+		int length = str.length() / 2;
+		char[] chars = str.toCharArray();
+		byte[] bytes = new byte[length];
+		for (int i = 0; i < length; i++) {
+			int position = i*2;
+			bytes[i] = (byte) (charToByte(chars[position]) | charToByte(chars[position + 1]) << 4);
+		}
+		String strDecipher = new String(bytes);
+		return strDecipher;
+	}
+	
+	/**
+	 * 0x9C加密
+	 * @param str
+	 * @return
+	 */
+	public static String encrypt(String str) {
+		byte[] strByteArr = str.getBytes();
+		StringBuilder stringBuilder = new StringBuilder();
+		for (int i = 0; i < strByteArr.length; i++) {
+			int temp = strByteArr[i] ^ 0x9C;
+			String hexStr = Integer.toHexString(temp);
+			if (hexStr.length() < 2) {
+				stringBuilder.append("0").append(hexStr);
+			} else {
+				stringBuilder.append(hexStr);
+			}
+		}
+		return stringBuilder.toString();
+	}
+	/**
+	 * 0x9C解密
+	 * @param str
+	 * @return
+	 */
+	public static String decipher(String str) {
+		byte[] decipher = new byte[str.length() / 2];
+		//char[] chars = stringBuilder.toString().toCharArray();
+		for (int i = 0; i < decipher.length; i++) {
+			decipher[i] = (byte)(0x9C ^ Integer.parseInt(str.substring(i * 2, i * 2 + 2), 16));
+			//int position = 2 * i;
+			//decipher[i] = (byte) (charToByte(chars[position]) << 4 | charToByte(chars[position + 1]));
+		}
+		String strDecipher = new String(decipher);
+		return strDecipher;
+	}
+	
 }
