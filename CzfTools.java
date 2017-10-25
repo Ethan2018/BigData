@@ -1,5 +1,16 @@
 package com.sunnyinfo.Utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Properties;
+
 public class CzfTools {
 
 	/**
@@ -273,7 +284,7 @@ public class CzfTools {
 	}
 	
 	/**
-	 * 字符串转16进制
+	 * 字符串转16进制字符串
 	 * @param str
 	 * @return
 	 */
@@ -289,7 +300,11 @@ public class CzfTools {
 		}
 		return sb.toString();
 	}
-	
+	/**
+	 * 还原
+	 * @param str
+	 * @return
+	 */
 	public static String hex2Str(String str) {
 		int length = str.length() / 2;
 		char[] chars = str.toCharArray();
@@ -307,7 +322,12 @@ public class CzfTools {
 		String radix16Symbol = "0123456789ABCDEF";
 		  return (byte) radix16Symbol.indexOf(c);
 	}
-
+	
+	/**
+	 * 低字节高字节反转转化为16进制
+	 * @param str
+	 * @return
+	 */
 	public static String str2Reverse(String str) {
 		char[] chars = "0123456789ABCDEF".toCharArray();
 		StringBuilder sb = new StringBuilder();
@@ -320,7 +340,11 @@ public class CzfTools {
 		}
 		return sb.toString();
 	}
-	
+	/**
+	 * 还原
+	 * @param str
+	 * @return
+	 */
 	public static String hex2ReverseStr(String str) {
 		int length = str.length() / 2;
 		char[] chars = str.toCharArray();
@@ -332,6 +356,8 @@ public class CzfTools {
 		String strDecipher = new String(bytes);
 		return strDecipher;
 	}
+	
+	
 	
 	/**
 	 * 0x9C加密
@@ -369,4 +395,151 @@ public class CzfTools {
 		return strDecipher;
 	}
 	
+	
+	/**
+	 * 删除空目录
+	 * @param dir
+	 */
+	public static void deleteEmptyDir(String dir) {
+		boolean success = (new File(dir)).delete();
+		if (success) {
+			System.out.println("Successfully deleted empty directory: " + dir);
+		} else {
+			System.out.println("Failed to delete empty directory: " + dir);
+		}
+	}
+	
+	
+	
+	
+	/**
+	 * 递归删除目录下的所有文件及子目录下所有文件
+	 * @param file
+	 * @return
+	 */
+	public static boolean deleteFile(File file) {
+		if (file.isDirectory()) {
+			String[] children = file.list();
+			for (int i = 0; i < children.length; i++) {
+				boolean success = deleteFile(new File(file, children[i]));
+				if (!success) {
+					return false;
+				}
+			}
+		}
+		return file.delete();
+	}
+	
+	/**
+	 * 递归实现查找当前目录下的所有文件,包括子目录
+	 * @param file
+	 */
+	public static void searchFiles(File file, ArrayList<File> list) {
+		if (file.isFile()) {
+			System.out.println(file);
+			return;
+		}
+		File[] files = file.listFiles();
+		for (File file2 : files) {
+			if (file2.isDirectory()) {
+				searchFiles(file2, list);
+			} else {
+				String name = file2.getName();
+				if (name.endsWith(".txt") && !name.equals("zong.txt")) {
+					list.add(file2);
+				}
+				//System.out.println(file2);
+			}
+		}
+	}
+	
+	
+	public static void searchFiles(File file) {
+		if (file.isFile()) {
+			System.out.println(file);
+			return;
+		}
+		File[] files = file.listFiles();
+		for (File file2 : files) {
+			if (file2.isDirectory()) {
+				searchFiles(file2);
+			} else {
+				System.out.println(file2);
+			}
+		}
+	}
+	/**
+	 * 序列化对象
+	 * @param file   写入的磁盘文件对象
+	 * @param t    需要序列化的类
+	 */
+	public static <T> void objSerializing(File file, T t) {
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream(file));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			oos.writeObject(t);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 对象的反序列化
+	 * @param file   序列化生成的字节码文件
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static <T> void deSerializing(File file) throws FileNotFoundException, IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+		Object obj = ois.readObject();
+		T t = (T)obj;
+		System.out.println(t);
+		ois.close();
+	}
+	
+	
+	/**
+	 * 记录一个程序的使用次数，超过5次提示去注册
+	 * @param file
+	 * @throws IOException
+	 */
+	public static void fileUsedNo(File file) throws IOException {
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		FileInputStream fis = new FileInputStream(file);
+		Properties properties = new Properties();
+		properties.load(fis);
+		
+		int count = 1;
+		String value = properties.getProperty("time");
+		if (value != null) {
+			count = Integer.parseInt(value);
+		}
+		if (count > 5) {
+			System.out.println("Please Register!");
+		}
+		count++;
+		properties.setProperty("time", count + "");
+		FileOutputStream fos = new FileOutputStream(file);
+		properties.store(fos, "Number of times tested");
+		fis.close();
+		fos.close();
+	}
 }
