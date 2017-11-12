@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>js中的数组</title>
+
+<!-- typeof的使用:是js中一个函数,把类型信息当字符串返回
+可能返回的结果可能有六种:nuber,string,object,function,boolean,undefined
+number:说明是数字
+string:字符串
+object:说明是Array,Null,对象
+function:说明是函数
+boolean:说明是布尔值
+undefined:说明是类型未定义 
+
+typeof可以判断一个变量是否存在
+如:if(typeof a !="undefeined")  不要直接使用if(a) 这样如果a不存在(未声明),就会出错
+注意:对于数组,Null等特殊的对象,会返回object,这是typeof的局限性
+
+如果我们希望获取某个变量(对象)是否是某个类的实例可以使用instanceof
+-->
+<script type="text/javascript">
+//注意点:1.js中的数组是动态的,可以直接添加元素
+//2.可以同时存储多个不同类型的变量
+
+//第一种创建方法   10没有太大的意义
+ var arr1 = new Array(2);
+ 
+ arr1[0] = 2;
+ arr1[1] = 3;
+ arr1[2] = 6;
+ arr1[3] = true;
+ 
+ for(var i=0;i<arr1.length;i++){
+	 document.write("元素:"+arr1[i]+"<br>");
+	 
+ }
+ 
+ //alert(typeof arr1); //object
+ //alert(typeof Array);  //function  
+ //alert(typeof 1);//number
+ 
+ //alert(arr1 instanceof Array);
+ 
+ //第二种
+ var arr2 = [];
+ 
+ //第三种
+ var arr3 = new Array();
+ 
+ //第四种
+ var arr4 = Array();
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

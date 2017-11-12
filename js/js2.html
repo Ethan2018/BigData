@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+//在java中两个数相除,会得到对应的小数形式
+//var x = 7/2;
+//alert(x);
+
+
+//定义函数  function+函数名(){}
+function fun(){
+	//获取input标签  价格
+	var myinput =  document.getElementById("1");
+	var x = myinput.value;
+
+	//数量
+	var number =  document.getElementById("2");
+	var y = number.value;
+
+	var zong =  parseInt(x)*parseInt(y);
+	document.getElementById("3").value = zong;
+	
+	if((zong>500) && (zong<1000)){
+		alert("赠送超级Q币两枚");
+	}
+	
+	var z=3;
+	switch(z){
+	case 1:
+		
+		break;
+	case 2:
+		break;
+	}
+	
+	if(){
+		
+	}else{
+		
+	}
+	
+}
+
+</script>
+</head>
+<body>
+竞拍价格:<input id="1" type="text"><br><br>
+购买数量:<input id="2" type=text><br><br>
+预计总量:<input id="3" type="text">
+<!-- 点击按钮触发事件的过程称为事件驱动 -->
+<input type="button" value="计算看看" onclick="fun()">
+</body>
+
+
+</html>

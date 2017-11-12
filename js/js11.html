@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>标签与js分离</title>
+<script type="text/javascript">
+//当页面都加载完成之后,在执行它
+window.onload = function(){
+	 button = document.getElementById("btn");
+	 button.onclick = function (){
+			alert("hehe");
+	 }
+}
+
+
+
+//因为这样直接调用,button对象还没有创建
+ <!-- var button = document.getElementById("btn");
+ button.onclick = function (){
+		doucment.write("gggod");
+ }
+ -->
+
+//原来的方式
+//function fun(){
+//	doucment.write("gggod");
+//}
+
+</script>
+</head>
+<body>
+<input id="btn" type="button" value="确定"">
+</body>
+</html>

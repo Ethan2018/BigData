@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>js的工具类</title>
+<!--创建.js文件作为工具类,将要使用的方法写在js文件里面,
+注意:两个函数之间要用,隔开
+格式: var  Util(名字) = {
+//函数1
+函数名:function(参数){函数体},
+//函数2
+函数名:function(参数){函数体},
+...
+} -->
+<script src="..\..\..\..\js\Util.js"></script>
+<script type="text/javascript">
+
+window.onload = function(){
+	
+	var btn1 = document.getElementById("btn1");
+	btn1.onclick = function(){
+		
+		//alert("这里是test");
+		Util.test();
+	}
+	
+	
+	var btn2 = document.getElementById("btn2");
+	btn2.onclick = function(){
+        var year = 2014;
+       var isTrue =  Util.isLeapYear(year);
+		//if((year%4==0 && year%100!= 0) || (year%400==0)){
+		//	alert("这是闰年");
+		//}else{
+		//	alert("这不是闰年");
+		//}
+		alert(isTrue);
+	}
+	
+}
+
+</script>
+</head>
+<body>
+<input id="btn1" type="button" value="点我">
+<input id="btn2" type="button" value="判断是否是闰年">
+</body>
+</html>
