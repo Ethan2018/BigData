@@ -2,6 +2,7 @@ package com.sunnyinfo.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -78,8 +79,7 @@ public class HFileAction extends BaseAction {
 		FileSystem fs = FSUtil.getFS();
 		try {
 			if (hd.delFile(fid)) {
-				boolean isok;
-					isok = fs.delete(new Path("/" + (String)session.get("username") + "/" + fname), true);
+			boolean	isok = fs.delete(new Path("/" + (String)session.get("username") + "/" + URLEncoder.encode(fname, "utf-8")), true);
 					if (isok) {
 						msg = "É¾³ý³É¹¦";
 					} else {
