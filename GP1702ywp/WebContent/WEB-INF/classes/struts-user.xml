@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+    
+    <struts>
+    	<package name="user" extends="base">
+    		<action name="register" class="com.sunnyinfo.action.UserAction" method="register">
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    			<result name="success">/login/register_ret.jsp</result>
+    			<result name="error">/login/no_login.jsp</result>
+    		</action>
+    		<action name="login" class="com.sunnyinfo.action.UserAction" method="login">
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    			<result name="success">/login/register_ret.jsp</result>
+    			<result name="error">/login/no_login.jsp</result>
+    		</action>
+    		<action name="logout" class="com.sunnyinfo.action.UserAction" method="logout">
+    			
+    			<result name="success">/login/register_ret.jsp</result>
+    			<result name="error">/login/register_ret.jsp</result>
+    		</action>
+    	</package>
+    </struts>

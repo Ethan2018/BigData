@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+    
+    <struts>
+    	<!-- struts 编码格式 -->
+	   	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+	   	<!-- struts 上传文件最大限制-->
+	   	<constant name="struts.multipart.maxSize" value="1024000000000"></constant>
+	   	<!-- struts 处于开发模式 -->
+	   	<constant name="struts.devMode" value="true"></constant>
+	   	<!-- struts处理什么样action -->
+	   	<constant name="struts.extenction.action" value="action"></constant>
+    	
+    	<package name="base" extends="struts-default" >
+  			<interceptors>
+  				<interceptor name="myinterceptor" class="com.sunnyinfo.interceptor.MyInterceptor"></interceptor>
+  				<interceptor-stack name="myinterceptorstack">
+  					<interceptor-ref name="myinterceptor"></interceptor-ref>
+  					<interceptor-ref name="defaultStack"></interceptor-ref>
+  				</interceptor-stack>
+  			</interceptors>
+  			
+  			<default-interceptor-ref name="myinterceptorstack"></default-interceptor-ref>
+    		<global-results>
+    			<result name="no_login">/login/no_login.jsp</result>
+    		</global-results>
+    	</package>
+    	
+    	
+    	<include file="./struts-user.xml"></include>
+    	<include file="./struts-file.xml"></include>
+    	
+    </struts>
