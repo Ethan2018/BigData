@@ -1,0 +1,18 @@
+#set($str="")
+#set($stringClass=$str.getClass())
+#set($localeClass=$stringClass.forName("java.util.Locale"))
+#set($date=$stringClass.forName("java.util.Date").newInstance())
+#set($locale=$localeClass.getConstructor($stringClass).newInstance("en_US"))
+#set($dateFormat=$stringClass.forName("java.text.SimpleDateFormat").getConstructor($stringClass, $localeClass).newInstance("d", $locale))
+#set($fdate=$dateFormat.format($date))
+#if($fdate.endsWith("1") && !$fdate.endsWith("11"))
+    #set($datecase=$stringClass.forName("java.text.SimpleDateFormat").getConstructor($stringClass, $localeClass).newInstance("EEE MMM d'st' aHH:mm z yyyy", $locale))
+#elseif($fdate.endsWith("2") && !$fdate.endsWith("12"))
+    #set($datecase=$stringClass.forName("java.text.SimpleDateFormat").getConstructor($stringClass, $localeClass).newInstance("EEE MMM d'nd' aHH:mm z yyyy", $locale))
+#elseif($fdate.endsWith("3") && !$fdate.endsWith("13"))
+    #set($datecase=$stringClass.forName("java.text.SimpleDateFormat").getConstructor($stringClass, $localeClass).newInstance("EEE MMM d'rd' aHH:mm z yyyy", $locale))
+#else
+    #set($datecase=$stringClass.forName("java.text.SimpleDateFormat").getConstructor($stringClass, $localeClass).newInstance("EEE MMM d'th' aHH:mm z yyyy", $locale))
+#end
+#set($fmdate=$datecase.format($date))
+/*Created by czf on ${fmdate}}*/
