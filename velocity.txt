@@ -15,4 +15,4 @@
     #set($datecase=$stringClass.forName("java.text.SimpleDateFormat").getConstructor($stringClass, $localeClass).newInstance("EEE MMM d'th' aHH:mm z yyyy", $locale))
 #end
 #set($fmdate=$datecase.format($date))
-/*Created by czf on ${fmdate}}*/
+/** Created by czf on ${fmdate} ...*/
